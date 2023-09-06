@@ -25,14 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
     inputElement.addEventListener("input", function () {
         const inputValue = inputElement.value;
 
-        if (inputValue.search('^\\d+$') !== -1 && Number.isInteger(parseInt(inputValue)) && parseInt(inputValue) >= -5 && parseInt(inputValue) <= 3) {
+        if (!(inputValue.search(/[^0-9-]/) !== -1) && Number.isInteger(parseInt(inputValue)) && parseInt(inputValue) >= -5 && parseInt(inputValue) <= 3) {
             validationMessageElement.textContent = "Верный ввод";
-            validationMessageElement.style.color = "green";
+            validationMessageElement.style.color = "#22AA22";
             submitElement.disabled = false;
             yValue.innerText = 'Y= ' + parseInt(inputValue);
         } else {
             validationMessageElement.textContent = "Ошибка. Введите целое число от -5 до 3";
-            validationMessageElement.style.color = "red";
+            validationMessageElement.style.color = "#AA2222";
             submitElement.disabled = true;
         }
     });
