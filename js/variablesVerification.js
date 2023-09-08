@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    let Xset, Yset, Rset = false;
+    const submitElement = document.getElementById('submitButton');
+    submitElement.disabled = true;
+
     const Xcheckboxes = document.querySelectorAll('.Xselection');
     const xValue = document.getElementById('xValue');
 
@@ -11,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 xValue.innerText = 'X= ' + checkbox.value;
+                Xset = true;
+                checkVariablesSet();
             }
         });
     });
@@ -19,8 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const validationMessageElement = document.getElementById("YMessage");
     const yValue = document.getElementById('yValue');
 
-    const submitElement = document.getElementById('submitButton');
-    submitElement.disabled = true;
 
     inputElement.addEventListener("input", function () {
         const inputValue = inputElement.value;
@@ -28,8 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!(inputValue.search(/[^0-9-]/) !== -1) && Number.isInteger(parseInt(inputValue)) && parseInt(inputValue) >= -5 && parseInt(inputValue) <= 3) {
             validationMessageElement.textContent = "Верный ввод";
             validationMessageElement.style.color = "#22AA22";
-            submitElement.disabled = false;
             yValue.innerText = 'Y= ' + parseInt(inputValue);
+            Yset = true;
+            checkVariablesSet();
         } else {
             validationMessageElement.textContent = "Ошибка. Введите целое число от -5 до 3";
             validationMessageElement.style.color = "#AA2222";
@@ -49,8 +55,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 rValue.innerText = 'R= ' + radio.value;
+                Rset = true;
+                checkVariablesSet();
             }
         });
     });
+
+    function checkVariablesSet() {
+        if (Xset && Yset && Rset) {
+            submitElement.disabled = false;
+        }
+    }
 
 });
