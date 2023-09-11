@@ -1,3 +1,5 @@
+import {drawR, removePoints} from "./drawer.js";
+
 document.addEventListener('DOMContentLoaded', function () {
 
     let Xset, Yset, Rset = false;
@@ -7,17 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const Xcheckboxes = document.querySelectorAll('.Xselection');
     const xValue = document.getElementById('xValue');
 
+    const selectedXValues = [];
+
     Xcheckboxes.forEach(checkbox => {
         checkbox.addEventListener('click', () => {
             if (checkbox.checked) {
-                Xcheckboxes.forEach(otherCheckbox => {
-                    if (otherCheckbox !== checkbox) {
-                        otherCheckbox.checked = false;
-                    }
-                });
-                xValue.innerText = 'X= ' + checkbox.value;
+                selectedXValues.push(checkbox.value);
+                xValue.innerText = 'X= ' + selectedXValues;
                 Xset = true;
                 checkVariablesSet();
+            } else {
+                const index = selectedXValues.indexOf(checkbox.value);
+                if (index !== -1) {
+                    selectedXValues.splice(index, 1);
+                    xValue.innerText = 'X= ' + selectedXValues;
+                }
+                if (selectedXValues.length === 0) {
+                    Xset = false;
+                    checkVariablesSet();
+                }
             }
         });
     });
@@ -30,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
     inputElement.addEventListener("input", function () {
         const inputValue = inputElement.value;
 
-        if (!(inputValue.search(/[^0-9-]/) !== -1) && Number.isInteger(parseInt(inputValue)) && parseInt(inputValue) >= -5 && parseInt(inputValue) <= 3) {
+        if (!(inputValue.search(/[^0-9.-]/) !== -1) && (!isNaN(parseFloat(inputValue))) && parseFloat(inputValue) >= -5 && parseFloat(inputValue) <= 3) {
             validationMessageElement.textContent = "Верный ввод";
             validationMessageElement.style.color = "#22AA22";
             yValue.innerText = 'Y= ' + parseInt(inputValue);
@@ -57,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 rValue.innerText = 'R= ' + radio.value;
                 Rset = true;
                 checkVariablesSet();
+                drawR(radio.value);
+                removePoints();
             }
         });
     });

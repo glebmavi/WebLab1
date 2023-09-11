@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(-45deg, #ee7752, #d76c8e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #ee7702, #d76c8e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     height: 100%;
@@ -132,4 +132,9 @@ h1 {
 
 #resultTable > tbody > tr > td {
     font-weight: normal;
+}
+
+.formRow > *{
+    margin-left: 10px;
+    margin-right: 10px;
 }
