@@ -1,6 +1,7 @@
 import {drawPoint} from "./drawer.js";
 
 $(document).ready(function () {
+    const tableBody = $('#resultTable tbody');
     $('#form').on("submit",function (event) {
         event.preventDefault();
 
@@ -22,10 +23,11 @@ $(document).ready(function () {
                         '<td>' + response.R + '</td>' +
                         '<td>' + response.hit + '</td>' +
                         '<td>' + response.currentTime + '</td>' +
-                        '<td>' + response.executionTime.toFixed(2) + '</td>' +
+                        '<td>' + (parseFloat(response.executionTime) * 1000).toFixed(2) + 'ms' + '</td>' +
                         '</tr>';
 
-                    $('#resultTable tbody').append(newRow);
+                    tableBody.append(newRow);
+                    localStorage.setItem('tableData', tableBody.html());
                     drawPoint(response.X, response.Y, response.R);
                 })
                 .fail(function (xhr, status, error) {

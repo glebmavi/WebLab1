@@ -1,22 +1,23 @@
 import {drawR, removePoints} from "./drawer.js";
+import {loadData, loadInputs} from "./loadData.js";
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    let Xset, Yset, Rset = false;
+    const loadedData = loadData();
+    let xSet, ySet, rSet = false;
     const submitElement = document.getElementById('submitButton');
-    submitElement.disabled = true;
+    checkVariablesSet();
 
-    const Xcheckboxes = document.querySelectorAll('.Xselection');
+    const xCheckboxes = document.querySelectorAll('.Xselection');
     const xValue = document.getElementById('xValue');
-
     const selectedXValues = [];
 
-    Xcheckboxes.forEach(checkbox => {
+    xCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('click', () => {
             if (checkbox.checked) {
                 selectedXValues.push(checkbox.value);
                 xValue.innerText = 'X= ' + selectedXValues;
-                Xset = true;
+                xSet = true;
                 checkVariablesSet();
             } else {
                 const index = selectedXValues.indexOf(checkbox.value);
@@ -25,58 +26,62 @@ document.addEventListener('DOMContentLoaded', function () {
                     xValue.innerText = 'X= ' + selectedXValues;
                 }
                 if (selectedXValues.length === 0) {
-                    Xset = false;
+                    xSet = false;
                     checkVariablesSet();
                 }
             }
+            localStorage.setItem('X', selectedXValues.toString());
         });
     });
+
 
     const inputElement = document.getElementById('YText');
     const validationMessageElement = document.getElementById("YMessage");
     const yValue = document.getElementById('yValue');
 
-
     inputElement.addEventListener("input", function () {
         const inputValue = inputElement.value;
 
-        if (!(inputValue.search(/[^0-9.-]/) !== -1) && (!isNaN(parseFloat(inputValue))) && parseFloat(inputValue) >= -5 && parseFloat(inputValue) <= 3) {
+        if (!(inputValue.search(/[^0-9.-]/) !== -1) && (inputValue.length < 10) && (!isNaN(parseFloat(inputValue))) && parseFloat(inputValue) >= -5 && parseFloat(inputValue) <= 3) {
             validationMessageElement.textContent = "Верный ввод";
             validationMessageElement.style.color = "#22AA22";
-            yValue.innerText = 'Y= ' + parseInt(inputValue);
-            Yset = true;
+            yValue.innerText = 'Y= ' + parseFloat(inputValue);
+            ySet = true;
             checkVariablesSet();
         } else {
             validationMessageElement.textContent = "Ошибка. Введите целое число от -5 до 3";
             validationMessageElement.style.color = "#AA2222";
-            submitElement.disabled = true;
+            ySet = false;
+            checkVariablesSet();
         }
+        localStorage.setItem('Y', inputValue);
     });
 
-    const Rradios = document.querySelectorAll('.Rselection');
+    const rRadios = document.querySelectorAll('.Rselection');
     const rValue = document.getElementById('rValue');
 
-    Rradios.forEach(radio => {
+    rRadios.forEach(radio => {
         radio.addEventListener('click', () => {
             if (radio.checked) {
-                Rradios.forEach(otherRadio => {
+                rRadios.forEach(otherRadio => {
                     if (otherRadio !== radio) {
                         otherRadio.checked = false;
                     }
                 });
                 rValue.innerText = 'R= ' + radio.value;
-                Rset = true;
+                rSet = true;
                 checkVariablesSet();
                 drawR(radio.value);
                 removePoints();
+                localStorage.setItem('R', radio.value);
             }
         });
     });
 
+    loadInputs(loadedData.xValues, loadedData.yValue, loadedData.rValue, loadedData.tableData);
+
     function checkVariablesSet() {
-        if (Xset && Yset && Rset) {
-            submitElement.disabled = false;
-        }
+        submitElement.disabled = !(xSet && ySet && rSet);
     }
 
 });

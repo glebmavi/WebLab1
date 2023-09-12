@@ -9,6 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die("Invalid input. All three variables must be integers.");
         }
 
+        if (strlen($_POST["Y"]) >= 10) {
+            http_response_code(400);
+            die("Invalid input. Y string value too large.");
+        }
+
         $X[] = intval($_POST["X"]);
         $Y = floatval($_POST["Y"]);
         $R = intval($_POST["R"]);
@@ -39,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'R' => $R,
                 'hit' => $hit,
                 'currentTime' => date("Y-m-d H:i:s"),
-                'executionTime' => (microtime(true) - $start_time) * 1000 . " ms"
+                'executionTime' => (microtime(true) - $start_time)
             );
 
             echo json_encode($response);
