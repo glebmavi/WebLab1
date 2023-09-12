@@ -19,8 +19,10 @@ function loadInputs(xValues, yValue, rValue, tableData) {
     });
 
     const yInput = document.getElementById('YText');
-    yInput.value = yValue;
-    yInput.dispatchEvent(new Event('input', { bubbles: true }));
+    if (yValue !== null) {
+        yInput.value = yValue;
+        yInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
 
     const rRadios = document.querySelector(`.Rselection[value="${rValue}"]`);
     if (rRadios) {
