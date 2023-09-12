@@ -29,8 +29,8 @@ function loadInputs(xValues, yValue, rValue, tableData) {
         rRadios.click();
     }
 
-    const tableBody = $('#resultTable tbody');
-    tableBody.html(tableData);
+    const tableBody = document.querySelector('#resultTable tbody');
+    tableBody.innerHTML = tableData;
 
 }
 

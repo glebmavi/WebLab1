@@ -1,39 +1,48 @@
-import {drawPoint} from "./drawer.js";
+import { drawPoint } from "./drawer.js";
 
-$(document).ready(function () {
-    const tableBody = $('#resultTable tbody');
-    $('#form').on("submit",function (event) {
+document.addEventListener("DOMContentLoaded", function () {
+    const tableBody = document.querySelector('#resultTable tbody');
+    const form = document.getElementById('form');
+
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const formData = $("#form").serializeArray();
-        const filteredFormData = formData.filter(item => item.name !== "X");
-        const xValues = formData.filter(item => item.name === "X").map(item => item.value);
+        const formData = new FormData(form);
+        const xValues = formData.getAll("X");
+        formData.delete("X");
 
-        xValues.forEach(function (xValue) {
-            $.ajax({
-                url: 'check.php',
-                method: 'POST',
-                dataType: 'json',
-                data: $.param(filteredFormData) + '&X=' + xValue,
-            })
-                .done(function (response) {
-                    const newRow = '<tr>' +
-                        '<td>' + response.X + '</td>' +
-                        '<td>' + response.Y + '</td>' +
-                        '<td>' + response.R + '</td>' +
-                        '<td>' + response.hit + '</td>' +
-                        '<td>' + response.currentTime + '</td>' +
-                        '<td>' + (parseFloat(response.executionTime) * 1000).toFixed(2) + 'ms' + '</td>' +
-                        '</tr>';
-
-                    tableBody.append(newRow);
-                    localStorage.setItem('tableData', tableBody.html());
-                    drawPoint(response.X, response.Y, response.R);
-                })
-                .fail(function (xhr, status, error) {
-                    alert('Status: ' + status + '\nError: ' + error);
+        for (const xValue of xValues) {
+            try {
+                formData.append("X", xValue);
+                const response = await fetch("check.php", {
+                    method: "POST",
+                    dataType: "json",
+                    body: formData,
                 });
-        });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const responseData = await response.json();
+
+                const newRow = `
+                    <tr>
+                        <td>${responseData.X}</td>
+                        <td>${responseData.Y}</td>
+                        <td>${responseData.R}</td>
+                        <td>${responseData.hit}</td>
+                        <td>${responseData.currentTime}</td>
+                        <td>${(parseFloat(responseData.executionTime) * 1000).toFixed(2)} ms</td>
+                    </tr>
+                `;
+
+                tableBody.insertAdjacentHTML("beforeend", newRow);
+                localStorage.setItem('tableData', tableBody.innerHTML);
+                drawPoint(responseData.X, responseData.Y, responseData.R);
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
     });
 });
-
