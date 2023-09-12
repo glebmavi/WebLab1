@@ -42,14 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
     inputElement.addEventListener("input", function () {
         const inputValue = inputElement.value;
 
-        if (!(inputValue.search(/[^0-9.-]/) !== -1) && (inputValue.length < 10) && (!isNaN(parseFloat(inputValue))) && parseFloat(inputValue) >= -5 && parseFloat(inputValue) <= 3) {
+        if (!(inputValue.search(/[^0-9.-]/) !== -1) && (inputValue.length < 18) && (!isNaN(parseFloat(inputValue))) && parseFloat(inputValue) >= -5 && parseFloat(inputValue) <= 3) {
             validationMessageElement.textContent = "Верный ввод";
             validationMessageElement.style.color = "#22AA22";
             yValue.innerText = 'Y= ' + parseFloat(inputValue);
             ySet = true;
             checkVariablesSet();
         } else {
-            validationMessageElement.textContent = "Ошибка. Введите целое число от -5 до 3";
+            validationMessageElement.textContent = "Ошибка. Введите число от -5 до 3";
             validationMessageElement.style.color = "#AA2222";
             ySet = false;
             checkVariablesSet();
@@ -63,11 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
     rRadios.forEach(radio => {
         radio.addEventListener('click', () => {
             if (radio.checked) {
-                rRadios.forEach(otherRadio => {
-                    if (otherRadio !== radio) {
-                        otherRadio.checked = false;
-                    }
-                });
                 rValue.innerText = 'R= ' + radio.value;
                 rSet = true;
                 checkVariablesSet();

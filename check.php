@@ -4,19 +4,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $start_time = microtime(true);
 
     if (isset($_POST["X"]) && isset($_POST["Y"]) && isset($_POST["R"])) {
-        if (preg_match('/[^0-9-.]/', $_POST["X"].$_POST["Y"].$_POST["R"])) {
+
+        $X = filter_input(INPUT_POST, 'X', FILTER_VALIDATE_INT);
+        if ($X === false) {
             http_response_code(400);
-            die("Invalid input. Non numerical values found.");
+            die("Invalid input. X is not an integer.");
+        }
+        $Y = filter_input(INPUT_POST, 'Y', FILTER_VALIDATE_FLOAT);
+        if ($Y === false) {
+            http_response_code(400);
+            die("Invalid input. Y is not a float.");
+        }
+        $R = filter_input(INPUT_POST, 'R', FILTER_VALIDATE_INT);
+        if ($R === false) {
+            http_response_code(400);
+            die("Invalid input. R is not an integer.");
         }
 
-        if (strlen($_POST["Y"]) >= 10) {
+        if (strlen($_POST["Y"]) > 17 or strlen($_POST["R"]) > 17 or strlen($_POST["X"]) > 17) {
             http_response_code(400);
-            die("Invalid input. Y string value too large.");
+            die("Invalid input. Cannot handle such precision.");
         }
-
-        $X = intval($_POST["X"]);
-        $Y = floatval($_POST["Y"]);
-        $R = intval($_POST["R"]);
 
         if (!variablesValidation($X, $Y, $R)) {
             http_response_code(400);
@@ -55,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 function variablesValidation($X, $Y, $R): bool {
-    if ((is_int($X) && $X >= -3 && $X <= 5) and (is_float($Y) && $Y >= -5 && $Y <= 3) and (is_int($R) && $R >= 1 && $R <= 5)) {
+    if (($X >= -3 && $X <= 5) and ($Y >= -5 && $Y <= 3) and ($R >= 1 && $R <= 5)) {
         return true;
     } else {
         return false;
