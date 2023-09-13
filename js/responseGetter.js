@@ -1,4 +1,4 @@
-import { drawPoint } from "./drawer.js";
+import { drawPoint, removePoints} from "./drawer.js";
 
 document.addEventListener("DOMContentLoaded", function () {
     const tableBody = document.querySelector('#resultTable tbody');
@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
+        removePoints();
 
         const formData = new FormData(form);
         const xValues = formData.getAll("X");
