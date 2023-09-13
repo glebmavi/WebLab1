@@ -5,21 +5,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (isset($_POST["X"]) && isset($_POST["Y"]) && isset($_POST["R"])) {
 
-        $X = filter_input(INPUT_POST, 'X', FILTER_VALIDATE_INT);
-        if ($X === false) {
+        $X = $_POST["X"];
+        $Y = $_POST["Y"];
+        $R = $_POST["R"];
+
+        if (!is_numeric($X) || !is_numeric($Y) || !is_numeric($R)) {
             http_response_code(400);
-            die("Invalid input. X is not an integer.");
+            die("Invalid input. X, Y, or R is not a numeric value.");
         }
-        $Y = filter_input(INPUT_POST, 'Y', FILTER_VALIDATE_FLOAT);
-        if ($Y === false) {
-            http_response_code(400);
-            die("Invalid input. Y is not a float.");
-        }
-        $R = filter_input(INPUT_POST, 'R', FILTER_VALIDATE_INT);
-        if ($R === false) {
-            http_response_code(400);
-            die("Invalid input. R is not an integer.");
-        }
+
+        $X = intval($X);
+        $Y = floatval($Y);
+        $R = intval($R);
 
         if (strlen($_POST["Y"]) > 17 or strlen($_POST["R"]) > 17 or strlen($_POST["X"]) > 17) {
             http_response_code(400);
