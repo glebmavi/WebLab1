@@ -87,16 +87,30 @@ input:hover {
     text-shadow: dimgray 2px 2px 5px;
 }
 
-#submitButton {
-    margin: 20px;
-    padding: 10px;
-    background-color: #22AA22;
+button {
     color: black;
     border: none;
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: #cccccc 2px 2px 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
+
+#submitButton {
+    margin: 20px;
+    padding: 10px;
+    background-color: #22AA22;
     font-size: 18px;
 }
 
@@ -106,15 +120,21 @@ input:hover {
 
 #submitButton:active {
     background-color: #005500;
-    transform: translateY(2px);
-    box-shadow: #cccccc 2px 2px 5px;
-
 }
 
-#submitButton:disabled {
-    background-color: #ccc;
-    color: #999;
-    cursor: not-allowed;
+#resetTable {
+    margin: 14px;
+    padding: 6px;
+    background-color: #AA2222;
+    font-size: 12px;
+}
+
+#resetTable:hover {
+    background-color: #880000;
+}
+
+#resetTable:active {
+    background-color: #550000;
 }
 
 h1 {

@@ -2,6 +2,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $start_time = microtime(true);
+    date_default_timezone_set('UTC');
 
     if (isset($_POST["X"]) && isset($_POST["Y"]) && isset($_POST["R"])) {
 

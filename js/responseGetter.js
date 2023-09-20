@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 const responseData = await response.json();
+                let time = new Date(responseData.currentTime);
+                time = new Date(time.getTime() - (time.getTimezoneOffset() * 60 * 1000));
+                const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
 
                 const newRow = `
                     <tr>
@@ -33,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${responseData.Y}</td>
                         <td>${responseData.R}</td>
                         <td>${responseData.hit}</td>
-                        <td>${responseData.currentTime}</td>
+                        <td>${time.toLocaleString(undefined, options)}</td>
                         <td>${(parseFloat(responseData.executionTime) * 1000).toFixed(2)} ms</td>
                     </tr>
                 `;
