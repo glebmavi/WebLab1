@@ -48,7 +48,13 @@ document.addEventListener('DOMContentLoaded', function () {
             yValue.innerText = 'Y= ' + parseFloat(inputValue);
             ySet = true;
             checkVariablesSet();
-        } else {
+        } else if (inputValue.length >= 18) {
+            validationMessageElement.textContent = "Ошибка. Слишком длинное число";
+            validationMessageElement.style.color = "#AA2222";
+            ySet = false;
+            checkVariablesSet();
+        }
+        else {
             validationMessageElement.textContent = "Ошибка. Введите число от -5 до 3";
             validationMessageElement.style.color = "#AA2222";
             ySet = false;
