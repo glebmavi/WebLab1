@@ -1,7 +1,7 @@
 import {drawR, removePoints} from "./drawer.js";
 import {loadData, loadInputs} from "./loadData.js";
 
-document.addEventListener('DOMContentLoaded', function () {
+function formListener() {
 
     const loadedData = loadData();
     let xSet, ySet, rSet = false;
@@ -85,4 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         submitElement.disabled = !(xSet && ySet && rSet);
     }
 
-});
+}
+
+export {formListener};

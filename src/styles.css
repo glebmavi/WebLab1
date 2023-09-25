@@ -1,0 +1,160 @@
+body {
+    background: linear-gradient(-45deg, #ee7702, #d76c8e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100%;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+svg {
+    background-color: transparent;
+}
+
+.shape {
+    fill: #3399FF;
+}
+
+.shape:hover {
+    fill: #0055BB;
+}
+
+svg > text {
+    fill: black;
+}
+svg > line {
+    stroke: black;
+}
+
+.marker {
+    fill: black;
+}
+
+svg > text:hover {
+    font-weight: bolder;
+}
+
+table {
+    text-align: center;
+    width: 75%;
+    margin: auto;
+}
+
+table th, table td, table tr {
+    padding: 10px 5px 10px 0;
+}
+
+label, td {
+    font-weight: bold;
+}
+
+input {
+    cursor: pointer;
+}
+
+input:hover {
+    transform: scale(1.3);
+}
+
+.tableWithBorder {
+    border-collapse: collapse;
+    margin: auto;
+    border: 2px solid #333;
+}
+
+.tableWithBorder th:hover,
+.tableWithBorder td:hover,
+.tableWithBorder tr:hover {
+    background-color: #cccccc88;
+}
+
+#YMessage {
+    margin: 10px 0 0 0;
+    text-shadow: dimgray 2px 2px 5px;
+}
+
+button {
+    color: black;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: #cccccc 2px 2px 5px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
+
+#submitButton {
+    margin: 20px;
+    padding: 10px;
+    background-color: #22AA22;
+    font-size: 18px;
+}
+
+#submitButton:hover {
+    background-color: #008800;
+}
+
+#submitButton:active {
+    background-color: #005500;
+}
+
+#resetTable {
+    margin: 14px;
+    padding: 6px;
+    background-color: #AA2222;
+    font-size: 12px;
+}
+
+#resetTable:hover {
+    background-color: #880000;
+}
+
+#resetTable:active {
+    background-color: #550000;
+}
+
+h1 {
+    font-family: monospace;
+}
+
+.valueMarker {
+    width: 15%;
+}
+
+.leftColumn {
+    width: 15%;
+}
+
+
+#resultTable > tbody > tr > td {
+    font-weight: normal;
+}
+
+.formRow > *{
+    margin-left: 10px;
+    margin-right: 10px;
+}

@@ -1,6 +1,6 @@
 import { drawPoint, removePoints} from "./drawer.js";
 
-document.addEventListener("DOMContentLoaded", function () {
+function responseGetter() {
     const tableBody = document.querySelector('#resultTable tbody');
     const form = document.getElementById('form');
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const xValue of xValues) {
             try {
                 formData.append("X", xValue);
-                const response = await fetch("check.php", {
+                const response = await fetch("./src/check.php", {
                     method: "POST",
                     dataType: "json",
                     body: formData,
@@ -49,4 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-});
+}
+
+export {responseGetter};
