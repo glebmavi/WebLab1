@@ -2,7 +2,10 @@ import {drawR, removePoints} from "./drawer.js";
 import {loadData, loadInputs} from "./loadData.js";
 
 function formListener() {
-
+    const RText = document.getElementsByClassName("RText");
+    const RHalfText = document.getElementsByClassName("RHalfText");
+    const MinusRHalfText = document.getElementsByClassName("MinusRHalfText");
+    const MinusRText = document.getElementsByClassName("MinusRText");
     const loadedData = loadData();
     let xSet, ySet, rSet = false;
     const submitElement = document.getElementById('submitButton');
@@ -72,7 +75,7 @@ function formListener() {
                 rValue.innerText = 'R= ' + radio.value;
                 rSet = true;
                 checkVariablesSet();
-                drawR(radio.value);
+                drawR(radio.value, RText, RHalfText, MinusRHalfText, MinusRText);
                 removePoints();
                 localStorage.setItem('R', radio.value);
             }

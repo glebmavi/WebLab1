@@ -14,6 +14,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function formListener() {
+  var RText = document.getElementsByClassName("RText");
+  var RHalfText = document.getElementsByClassName("RHalfText");
+  var MinusRHalfText = document.getElementsByClassName("MinusRHalfText");
+  var MinusRText = document.getElementsByClassName("MinusRText");
   var loadedData = (0,_loadData_js__WEBPACK_IMPORTED_MODULE_1__.loadData)();
   var xSet,
     ySet,
@@ -76,7 +80,7 @@ function formListener() {
         rValue.innerText = 'R= ' + radio.value;
         rSet = true;
         checkVariablesSet();
-        (0,_drawer_js__WEBPACK_IMPORTED_MODULE_0__.drawR)(radio.value);
+        (0,_drawer_js__WEBPACK_IMPORTED_MODULE_0__.drawR)(radio.value, RText, RHalfText, MinusRHalfText, MinusRText);
         (0,_drawer_js__WEBPACK_IMPORTED_MODULE_0__.removePoints)();
         localStorage.setItem('R', radio.value);
       }
@@ -102,7 +106,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function drawR(R) {
+function drawR(R, RText, RHalfText, MinusRHalfText, MinusRText) {
   var _iterator = _createForOfIteratorHelper(RText),
     _step;
   try {
@@ -152,7 +156,7 @@ function drawR(R) {
     _iterator4.f();
   }
 }
-function drawPoint(X, Y, R) {
+function drawPoint(X, Y, R, svgGraph) {
   var multiplier = 6 / R;
   var newPoint = document.createElementNS("http://www.w3.org/2000/svg", 'use');
   newPoint.setAttribute("x", (X * multiplier).toString());
@@ -233,6 +237,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function responseGetter() {
+  var svgGraph = document.getElementById("svgGraph");
   var tableBody = document.querySelector('#resultTable tbody');
   var form = document.getElementById('form');
   form.addEventListener("submit", /*#__PURE__*/function () {
@@ -288,7 +293,7 @@ function responseGetter() {
             newRow = "\n                    <tr>\n                        <td>".concat(responseData.X, "</td>\n                        <td>").concat(responseData.Y, "</td>\n                        <td>").concat(responseData.R, "</td>\n                        <td>").concat(responseData.hit, "</td>\n                        <td>").concat(time.toLocaleString(undefined, options), "</td>\n                        <td>").concat((parseFloat(responseData.executionTime) * 1000).toFixed(2), " ms</td>\n                    </tr>\n                ");
             tableBody.insertAdjacentHTML("beforeend", newRow);
             localStorage.setItem('tableData', tableBody.innerHTML);
-            (0,_drawer_js__WEBPACK_IMPORTED_MODULE_0__.drawPoint)(responseData.X, responseData.Y, responseData.R);
+            (0,_drawer_js__WEBPACK_IMPORTED_MODULE_0__.drawPoint)(responseData.X, responseData.Y, responseData.R, svgGraph);
             _context.next = 32;
             break;
           case 29:
@@ -408,11 +413,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  var svgGraph = document.getElementById("svgGraph");
-  var RText = document.getElementsByClassName("RText");
-  var RHalfText = document.getElementsByClassName("RHalfText");
-  var MinusRHalfText = document.getElementsByClassName("MinusRHalfText");
-  var MinusRText = document.getElementsByClassName("MinusRText");
   (0,_js_variablesVerification__WEBPACK_IMPORTED_MODULE_0__.formListener)();
   (0,_js_responseGetter__WEBPACK_IMPORTED_MODULE_1__.responseGetter)();
   (0,_js_resetTable__WEBPACK_IMPORTED_MODULE_2__.resetTable)();

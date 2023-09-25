@@ -1,6 +1,7 @@
 import { drawPoint, removePoints} from "./drawer.js";
 
 function responseGetter() {
+    const svgGraph = document.getElementById("svgGraph");
     const tableBody = document.querySelector('#resultTable tbody');
     const form = document.getElementById('form');
 
@@ -43,7 +44,7 @@ function responseGetter() {
 
                 tableBody.insertAdjacentHTML("beforeend", newRow);
                 localStorage.setItem('tableData', tableBody.innerHTML);
-                drawPoint(responseData.X, responseData.Y, responseData.R);
+                drawPoint(responseData.X, responseData.Y, responseData.R, svgGraph);
             } catch (error) {
                 alert('Error: ' + error.message);
             }

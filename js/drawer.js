@@ -1,4 +1,4 @@
-function drawR(R) {
+function drawR(R, RText, RHalfText, MinusRHalfText, MinusRText) {
 
     for (let textElement of RText) {
         textElement.innerHTML = R.toString();
@@ -14,7 +14,7 @@ function drawR(R) {
     }
 }
 
-function drawPoint(X, Y, R) {
+function drawPoint(X, Y, R, svgGraph) {
     let multiplier = 6 / R;
     const newPoint = document.createElementNS("http://www.w3.org/2000/svg", 'use');
     newPoint.setAttribute("x", (X * multiplier).toString());
