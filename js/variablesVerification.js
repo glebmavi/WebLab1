@@ -1,5 +1,5 @@
 import {drawR, removePoints} from "./drawer.js";
-import {loadData, loadInputs} from "./loadData.js";
+import {loadData, writeInputs} from "./loadData.js";
 
 function formListener() {
     const RText = document.getElementsByClassName("RText");
@@ -19,24 +19,21 @@ function formListener() {
         checkbox.addEventListener('click', () => {
             if (checkbox.checked) {
                 selectedXValues.push(checkbox.value);
-                xValue.innerText = 'X= ' + selectedXValues;
                 xSet = true;
-                checkVariablesSet();
             } else {
                 const index = selectedXValues.indexOf(checkbox.value);
                 if (index !== -1) {
                     selectedXValues.splice(index, 1);
-                    xValue.innerText = 'X= ' + selectedXValues;
                 }
                 if (selectedXValues.length === 0) {
                     xSet = false;
-                    checkVariablesSet();
                 }
             }
+            xValue.innerText = 'X= ' + selectedXValues;
+            checkVariablesSet();
             localStorage.setItem('X', selectedXValues.toString());
         });
     });
-
 
     const inputElement = document.getElementById('YText');
     const validationMessageElement = document.getElementById("YMessage");
@@ -82,7 +79,7 @@ function formListener() {
         });
     });
 
-    loadInputs(loadedData.xValues, loadedData.yValue, loadedData.rValue, loadedData.tableData);
+    writeInputs(loadedData.xValues, loadedData.yValue, loadedData.rValue, loadedData.tableData);
 
     function checkVariablesSet() {
         submitElement.disabled = !(xSet && ySet && rSet);

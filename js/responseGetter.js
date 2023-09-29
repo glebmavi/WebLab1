@@ -1,4 +1,5 @@
-import { drawPoint, removePoints} from "./drawer.js";
+import {drawPoint, removePoints} from "./drawer.js";
+import {loadTableData, writeTable} from "./loadData.js";
 
 function responseGetter() {
     const svgGraph = document.getElementById("svgGraph");
@@ -29,27 +30,52 @@ function responseGetter() {
                 const responseData = await response.json();
                 let time = new Date(responseData.currentTime);
                 time = new Date(time.getTime() - (time.getTimezoneOffset() * 60 * 1000));
-                const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+                const options = {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                };
 
-                const newRow = `
-                    <tr>
-                        <td>${responseData.X}</td>
-                        <td>${responseData.Y}</td>
-                        <td>${responseData.R}</td>
-                        <td>${responseData.hit}</td>
-                        <td>${time.toLocaleString(undefined, options)}</td>
-                        <td>${(parseFloat(responseData.executionTime) * 1000).toFixed(2)} ms</td>
-                    </tr>
-                `;
+                const jsonData = {
+                    X: responseData.X,
+                    Y: responseData.Y,
+                    R: responseData.R,
+                    hit: responseData.hit,
+                    currentTime: time.toLocaleString(undefined, options),
+                    executionTime: (parseFloat(responseData.executionTime) * 1000).toFixed(2) + "ms"
+                }
 
-                tableBody.insertAdjacentHTML("beforeend", newRow);
-                localStorage.setItem('tableData', tableBody.innerHTML);
+                // const newRow = `
+                //     <tr>
+                //         <td>${jsonData.X}</td>
+                //         <td>${jsonData.Y}</td>
+                //         <td>${jsonData.R}</td>
+                //         <td>${jsonData.hit}</td>
+                //         <td>${jsonData.currentTime}</td>
+                //         <td>${jsonData.executionTime}</td>
+                //     </tr>
+                // `;
+                //
+                // tableBody.insertAdjacentHTML("beforeend", newRow);
+                appendTableDataLocalStorage(JSON.stringify(jsonData));
+                writeTable(loadTableData(), tableBody);
                 drawPoint(responseData.X, responseData.Y, responseData.R, svgGraph);
             } catch (error) {
                 alert('Error: ' + error.message);
             }
         }
     });
+}
+
+function appendTableDataLocalStorage(data) {
+    const dataArray = loadTableData();
+
+    dataArray.push(data);
+    const updatedData = JSON.stringify(dataArray);
+    localStorage.setItem('tableData', updatedData);
 }
 
 export {responseGetter};

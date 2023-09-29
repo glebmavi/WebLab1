@@ -1,8 +1,7 @@
 function resetTable() {
     const resetButton = document.getElementById('resetTable');
     resetButton.addEventListener('click', () => {
-        const tableBody = document.querySelector('#resultTable tbody');
-        tableBody.innerHTML = '';
+        document.querySelector('#resultTable tbody').innerHTML = '';
         localStorage.setItem('tableData', '');
     });
 }

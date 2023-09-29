@@ -1,7 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    // entry: ['./js/resetTable.js', './js/responseGetter.js', './js/variablesVerification.js'],  // Your entry point
     entry: './src/index.js',  // Your entry point
     output: {
         filename: 'bundle.js',  // Output bundle filename
